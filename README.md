@@ -1,3 +1,12 @@
+# PENDU
+
+## INSTALL
+
+```shell
+composer install
+```
+
+## CHECK list
 OK liste de mots (fichier ou bdd)
 
 si aucune partie en cours
