@@ -10,7 +10,7 @@ use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\Component\Routing\Annotation\Route;
 
-#[Route(path:"/test_mot", name:"test_mot")]
+#[Route(path: '/test_mot', name: 'test_mot')]
 class TryWord extends AbstractController
 {
     public function __invoke(Game $pendu, SessionInterface $session, RequestStack $requestStack)

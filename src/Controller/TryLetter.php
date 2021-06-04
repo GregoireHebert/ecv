@@ -9,12 +9,12 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\Component\Routing\Annotation\Route;
 
-#[Route(path:"/test_letter/{letter}", name:"test_letter")]
+#[Route(path: '/test_letter/{letter}', name: 'test_letter')]
 class TryLetter extends AbstractController
 {
     public function __invoke(Game $pendu, SessionInterface $session, string $letter)
     {
-        if ($session->get('word') ===  null) {
+        if (null === $session->get('word')) {
             return $this->redirectToRoute('game');
         }
 
@@ -22,7 +22,7 @@ class TryLetter extends AbstractController
         $lettresTrouvees = $session->get('lettresTrouvees', []);
         $motTableau = str_split($session->get('word'));
 
-        if (in_array(strtolower($letter), $lettreTentees)) {
+        if (\in_array(strtolower($letter), $lettreTentees, true)) {
             $tenta = $session->get('tenta');
             $session->set('tenta', --$tenta);
 
@@ -39,7 +39,7 @@ class TryLetter extends AbstractController
             $session->set('lettresTrouvees', $lettresTrouvees);
 
             $intersect = array_intersect($lettresTrouvees, $motTableau);
-            if (count($intersect) === count(array_unique($motTableau))) {
+            if (\count($intersect) === \count(array_unique($motTableau))) {
                 return $this->forward(Victory::class);
             }
 

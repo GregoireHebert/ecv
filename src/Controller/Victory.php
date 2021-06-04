@@ -7,7 +7,7 @@ namespace App\Controller;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
-#[Route(path:"/win", name:"win")]
+#[Route(path: '/win', name: 'win')]
 class Victory
 {
     public function __invoke(): Response

@@ -9,7 +9,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\Component\Routing\Annotation\Route;
 
-#[Route(path:"/init", name:"init")]
+#[Route(path: '/init', name: 'init')]
 class Reset extends AbstractController
 {
     public function __invoke(Game $game, SessionInterface $session)

@@ -6,13 +6,14 @@ namespace App\Controller;
 
 use App\Pendu\Game;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\Component\Routing\Annotation\Route;
 
-#[Route(path:"/", name:"game")]
+#[Route(path: '/', name: 'game')]
 class Home extends AbstractController
 {
-    public function __invoke(Game $game, SessionInterface $session)
+    public function __invoke(Game $game, SessionInterface $session): Response
     {
         if (null === $session->get('word')) {
             $session->set('word', $game->getRandomWord());
@@ -38,15 +39,14 @@ class Home extends AbstractController
 
         $lettresTrouvees = $session->get('lettresTrouvees', []);
 
-        foreach ($motTableau as &$lettre)
-        {
-            if (!in_array(strtolower($lettre), $lettresTrouvees)) {
+        foreach ($motTableau as &$lettre) {
+            if (!\in_array(strtolower($lettre), $lettresTrouvees, true)) {
                 $lettre = ' _ ';
             }
         }
 
         return $this->render('game.html.twig', [
-            'mot' => implode('', $motTableau)
+            'mot' => implode('', $motTableau),
         ]);
     }
 }
