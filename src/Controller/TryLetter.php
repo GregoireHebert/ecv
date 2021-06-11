@@ -6,13 +6,14 @@ namespace App\Controller;
 
 use App\Pendu\Game;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\Component\Routing\Annotation\Route;
 
 #[Route(path: '/test_letter/{letter}', name: 'test_letter')]
 class TryLetter extends AbstractController
 {
-    public function __invoke(Game $pendu, SessionInterface $session, string $letter)
+    public function __invoke(Game $pendu, SessionInterface $session, string $letter): Response
     {
         if (null === $session->get('word')) {
             return $this->redirectToRoute('game');

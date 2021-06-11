@@ -6,7 +6,8 @@ namespace App\Pendu;
 
 class Game
 {
-    private array $mots;
+    /** @var null|iterable<string>  */
+    private ?iterable $mots = null;
 
     public function __construct(string $pathList)
     {
@@ -23,7 +24,7 @@ class Game
         return $this->mots[array_rand($this->mots, 1)];
     }
 
-    public function tryLetter(string $letter, string $word)
+    public function tryLetter(string $letter, string $word): bool
     {
         if (\strlen($letter) > 1) {
             throw new \RuntimeException('It cannot be more than 1 letter tested.');

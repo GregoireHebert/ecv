@@ -7,13 +7,14 @@ namespace App\Controller;
 use App\Pendu\Game;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\RequestStack;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\Component\Routing\Annotation\Route;
 
 #[Route(path: '/test_mot', name: 'test_mot')]
 class TryWord extends AbstractController
 {
-    public function __invoke(Game $pendu, SessionInterface $session, RequestStack $requestStack)
+    public function __invoke(Game $pendu, SessionInterface $session, RequestStack $requestStack): Response
     {
         $request = $requestStack->getCurrentRequest();
 
