@@ -9,6 +9,7 @@ use App\Controller\Elo;
 use App\Controller\Error404;
 use App\Controller\Toto;
 use App\Controller\Welcome;
+use App\Controller\NewPlayer;
 
 class Router
 {
@@ -16,7 +17,8 @@ class Router
         '/' => Welcome::class,
         '/bidule' => Toto::class,
         '/404' => Error404::class,
-        '/elo' => Elo::class
+        '/elo' => Elo::class,
+        '/players/add' => NewPlayer::class
     ];
 
     private static string $path;

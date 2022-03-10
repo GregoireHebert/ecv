@@ -6,31 +6,41 @@ namespace App\Controller;
 
 use App\Elo\Encounter;
 use App\Elo\Lobby;
-use App\Elo\Player;
+use App\Infra\Memory\DbSelector;
+use App\Infra\Memory\PlayersJson;
+use App\Infra\Memory\PlayersMemory;
 
 class Elo implements Controller
 {
     public function render()
     {
-        $greg = new Player(400);
-        $jade = new Player(800);
+        $player1 = $_GET['player1'] ?? '';
+        $player2 = $_GET['player2'] ?? '';
+
+        try {
+            $player1 = DbSelector::getConnector()::findPlayer($player1);
+            $player2 = DbSelector::getConnector()::findPlayer($player2);
+        } catch (\RuntimeException $e) {
+            echo $e->getMessage();
+            return;
+        }
 
         echo sprintf(
             'Greg à %.2f%% chance de gagner face a Jade',
-                Encounter::probabilityAgainst($greg, $jade) * 100
+                Encounter::probabilityAgainst($player1, $player2) * 100
         ) . PHP_EOL;
 
         // Imaginons que greg l'emporte tout de même.
-        Encounter::setNewLevel($greg, $jade, Encounter::RESULT_WINNER);
-        Encounter::setNewLevel($jade, $greg, Encounter::RESULT_LOSER);
+        Encounter::setNewLevel($player1, $player2, Encounter::RESULT_WINNER);
+        Encounter::setNewLevel($player2, $player1, Encounter::RESULT_LOSER);
 
         echo sprintf(
             'les niveaux des joueurs ont évolués vers %s pour Greg et %s pour Jade',
-            $greg->getLevel(),
-            $jade->getLevel()
+            $player1->getLevel(),
+            $player2->getLevel()
         );
 
         $lobby = new Lobby();
-        $lobby->addPlayer($greg);
+        $lobby->addPlayer($player1);
     }
 }

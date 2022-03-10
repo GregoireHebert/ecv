@@ -8,6 +8,6 @@ class WaitingPlayerFactory
 {
     public static function createFromPlayer(Player $player): WaitingPlayer
     {
-        return new WaitingPlayer($player->getLevel());
+        return new WaitingPlayer($player->getLevel(), $player->name);
     }
 }

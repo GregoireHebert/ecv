@@ -7,10 +7,12 @@ namespace App\Elo;
 class Player
 {
     //protected int $level;
+    //public string $name;
 
-    public function __construct(protected int $level = 400)
+    public function __construct(public int $level = 400, public string $name)
     {
         //$this->level = $level;
+        //$this->name = $name;
     }
 
     public function getLevel(): int
