@@ -7,8 +7,6 @@ namespace App\Controller;
 use App\Elo\Encounter;
 use App\Elo\Lobby;
 use App\Infra\Memory\DbSelector;
-use App\Infra\Memory\PlayersJson;
-use App\Infra\Memory\PlayersMemory;
 
 class Elo implements Controller
 {
@@ -36,8 +34,8 @@ class Elo implements Controller
 
         echo sprintf(
             'les niveaux des joueurs ont évolués vers %s pour Greg et %s pour Jade',
-            $player1->getLevel(),
-            $player2->getLevel()
+            $player1->level,
+            $player2->level
         );
 
         $lobby = new Lobby();

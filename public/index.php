@@ -7,7 +7,7 @@ spl_autoload_register(function($fqcn) {
     require_once (__DIR__.'/../'.$path.'.php');
 });
 
-define('APP_ENV', 'dev');
+define('APP_ENV', 'prod');
 
 $router = App\Routing\Router::getFromGlobals();
 $router->getController();
