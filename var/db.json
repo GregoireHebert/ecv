@@ -1,1 +1,1 @@
-[{"level":1400,"name":"greg"},{"level":2800,"name":"jade"},{"level":400,"name":"john"}]
+[{"level":1400,"name":"greg","isAdmin":true},{"level":2800,"name":"jade"},{"level":400,"name":"john"},{"level":400,"name":null},{"level":400,"name":null},{"level":400,"name":null},{"level":400,"name":null},{"level":400,"name":null},{"level":400,"name":null},{"level":400,"name":null}]
