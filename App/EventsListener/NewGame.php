@@ -26,12 +26,10 @@ class NewGame implements ListenerInterface
         $game = $event->controller->game;
         $router = $event->router;
 
-        if (null !== $router->get('new') && ($game->isWon() || $game->isLost())) {
-            $game->resetletters();
-            $gameLoader = new GameLoader($event->router);
-            $game = $gameLoader->load(true);
+        $game->resetletters();
+        $gameLoader = new GameLoader($router);
+        $game = $gameLoader->load(true);
 
-            $event->controller->game = $game;
-        }
+        $event->controller->game = $game;
     }
 }
