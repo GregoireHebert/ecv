@@ -19,6 +19,6 @@ class Wordle implements Controller
 
     public function render()
     {
-        $this->templating->loadTemplate(PUBLIC_DIR.'/../templates/wordle.phtml');
+        $this->templating->loadTemplate(PUBLIC_DIR.'/../templates/wordle.phtml', ['game' => $this->game]);
     }
 }

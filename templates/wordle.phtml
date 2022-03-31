@@ -3,13 +3,19 @@
     <body>
         <h1>Wordle</h1>
         <p>
-            <b>Mot à trouver : _____</b>
+            <b>Tentative N: <?php echo $game->getLettersAsString(); ?></b>
         </p>
         <br/><hr/>
         <p>
             <?php foreach (range('a', 'z') as $letter) {?>
             <a href="?letter=<?php echo $letter; ?>"><?php echo $letter; ?></a>
             <?php } ?>
+        </p>
+        <p>
+            <a href="?reset">Recommencer</a>
+        </p>
+        <p>
+            <a href="?try">Valider mon mot</a>
         </p>
     </body>
 </html>

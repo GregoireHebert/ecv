@@ -19,13 +19,15 @@ class Router
 
     private static ?Router $router = null;
     private static ?array $user = null;
-    private static ?array $cookies = null;
+    private static array $cookies = [];
+    private static array $get = [];
 
     private function __construct()
     {
         self::$path = $_SERVER['PATH_INFO'] ?? '/';
         self::$user = $_SESSION['user'] ?? null;
         self::$cookies = $_COOKIE ?? [];
+        self::$get = $_GET ?? [];
     }
 
     public static function getFromGlobals(): Router
@@ -62,5 +64,10 @@ class Router
     public function getCookie(string $item, $default = null)
     {
         return self::$cookies[$item] ?? $default;
+    }
+
+    public function get($item, $default = null)
+    {
+        return self::$get[$item] ?? $default;
     }
 }
