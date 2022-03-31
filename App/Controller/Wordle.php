@@ -4,21 +4,21 @@ declare(strict_types=1);
 
 namespace App\Controller;
 
-use App\Infra\Repository\WordRepository;
+use App\Infra\Templating\Templating;
 use App\Wordle\Game;
 
 class Wordle implements Controller
 {
-    private WordRepository $wordRepository;
     public ?Game $game = null;
+    public ?Templating $templating = null;
 
     public function __construct()
     {
-        $this->wordRepository = new WordRepository();
+        $this->templating = new Templating();
     }
 
     public function render()
     {
-        var_dump($this->game);
+        $this->templating->loadTemplate(PUBLIC_DIR.'/../templates/wordle.phtml');
     }
 }

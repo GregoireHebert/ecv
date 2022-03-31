@@ -1,0 +1,15 @@
+<html>
+    <head></head>
+    <body>
+        <h1>Wordle</h1>
+        <p>
+            <b>Mot à trouver : _____</b>
+        </p>
+        <br/><hr/>
+        <p>
+            <?php foreach (range('a', 'z') as $letter) {?>
+            <a href="?letter=<?php echo $letter; ?>"><?php echo $letter; ?></a>
+            <?php } ?>
+        </p>
+    </body>
+</html>
