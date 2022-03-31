@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Wordle;
 
 use App\Wordle\Exception\IncompleteWordException;
+use App\Wordle\Helpers\Letter;
 
 class Game
 {
@@ -22,9 +23,32 @@ class Game
         return $this->word;
     }
 
-    public function getLettersAsString(): string
+    public function getLettersAsString(bool $colorized = false): string
     {
-        return str_pad(implode($this->letters), strlen($this->word), '_');
+        if (!$colorized){
+            return str_pad(implode($this->letters), strlen($this->word), '_');
+        }
+
+        $string = '';
+        foreach ($this->letters as $place => $stringLetter) {
+            $letter = new Letter($stringLetter);
+            $valid = $letter->isValidInWord($this->word);
+            $placed = $letter->isPlacedInWord($place, $this->word);
+
+            if ($valid && $placed) {
+                $string .= "<span style='background-color:#0080ff;width:15px;height:15px;color:white;padding:5px;display: inline-block;text-align: center;line-height:15px;'>$stringLetter</span>";
+                continue;
+            }
+
+            if ($valid && !$placed) {
+                $string .= "<span style='background-color:#ffbb00;width:15px;height:15px;padding:5px;border-radius: 50%;display: inline-block;text-align: center;line-height:15px;'>$stringLetter</span>";
+                continue;
+            }
+
+            $string .= "<span style='width:15px;padding:5px;border-radius: 50%;height:15px;display: inline-block;text-align: center;line-height:15px;'>$stringLetter</span>";
+        }
+
+        return $string;
     }
 
     public function tryWord(): void
@@ -37,7 +61,7 @@ class Game
             throw new IncompleteWordException();
         }
 
-        $this->trials[] = new Trial(implode($this->letters));
+        $this->trials[] = new Trial($this->getLettersAsString(true));
 
         if ($this->word === implode($this->letters)) {
             $this->won = true;
