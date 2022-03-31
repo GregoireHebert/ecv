@@ -5,10 +5,12 @@ declare(strict_types=1);
 namespace App\Controller;
 
 use App\Infra\Repository\WordRepository;
+use App\Wordle\Game;
 
 class Wordle implements Controller
 {
     private WordRepository $wordRepository;
+    public ?Game $game = null;
 
     public function __construct()
     {
@@ -17,7 +19,6 @@ class Wordle implements Controller
 
     public function render()
     {
-        $randomWord = $this->wordRepository->getRandomWord();
-        echo $randomWord;
+        var_dump($this->game);
     }
 }

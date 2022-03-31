@@ -54,13 +54,13 @@ class Router
         return self::$user;
     }
 
-    public static function getCookies(): array
+    public function getCookies(): array
     {
         return self::$cookies;
     }
 
-    public static function getCookie(string $item, $default = null)
+    public function getCookie(string $item, $default = null)
     {
-        return self::$cookies[$item] ?? null;
+        return self::$cookies[$item] ?? $default;
     }
 }
