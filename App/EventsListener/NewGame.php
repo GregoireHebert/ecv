@@ -7,8 +7,9 @@ namespace App\EventsListener;
 use App\Controller\Wordle;
 use App\Infra\EventsDispatcher\Events\ControllerEvent;
 use App\Infra\EventsDispatcher\ListenerInterface;
+use App\Wordle\GameLoader;
 
-class ResetLetters implements ListenerInterface
+class NewGame implements ListenerInterface
 {
     public function support($event): bool
     {
@@ -25,8 +26,12 @@ class ResetLetters implements ListenerInterface
         $game = $event->controller->game;
         $router = $event->router;
 
-        if (null !== $router->get('reset')) {
+        if (null !== $router->get('new') && $game->isWon()) {
             $game->resetletters();
+            $gameLoader = new GameLoader($event->router);
+            $game = $gameLoader->load(true);
+
+            $event->controller->game = $game;
         }
     }
 }

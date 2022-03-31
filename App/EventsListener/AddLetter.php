@@ -7,7 +7,6 @@ namespace App\EventsListener;
 use App\Controller\Wordle;
 use App\Infra\EventsDispatcher\Events\ControllerEvent;
 use App\Infra\EventsDispatcher\ListenerInterface;
-use App\Wordle\GameLoader;
 
 class AddLetter implements ListenerInterface
 {

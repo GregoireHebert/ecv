@@ -7,8 +7,9 @@ namespace App\EventsListener;
 use App\Controller\Wordle;
 use App\Infra\EventsDispatcher\Events\ControllerEvent;
 use App\Infra\EventsDispatcher\ListenerInterface;
+use App\Wordle\Exception\IncompleteWordException;
 
-class ResetLetters implements ListenerInterface
+class TryWord implements ListenerInterface
 {
     public function support($event): bool
     {
@@ -25,8 +26,11 @@ class ResetLetters implements ListenerInterface
         $game = $event->controller->game;
         $router = $event->router;
 
-        if (null !== $router->get('reset')) {
-            $game->resetletters();
+        if (null !== $router->get('try')) {
+            try {
+                $game->tryWord();
+            } catch (IncompleteWordException){
+            }
         }
     }
 }

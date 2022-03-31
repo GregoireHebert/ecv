@@ -2,6 +2,10 @@
     <head></head>
     <body>
         <h1>Wordle</h1>
+        <?php if ($game->isWon()) { ?>
+            <h2>Félicitation !</h2>
+            <p><a href="?new">Lancer une nouvelle partie.</a></p>
+        <?php } ?>
         <p>
             <b>Tentative N: <?php echo $game->getLettersAsString(); ?></b>
         </p>

@@ -3,6 +3,8 @@
 declare(strict_types=1);
 
 use App\EventsListener\AddLetter;
+use App\EventsListener\NewGame;
+use App\EventsListener\TryWord;
 use App\EventsListener\ResetLetters;
 use App\EventsListener\LoadGame;
 use App\EventsListener\SaveGame;
@@ -27,7 +29,7 @@ define('APP_ENV', 'prod');
 define('PUBLIC_DIR', __DIR__);
 
 $eventDispatcher = new Dispatcher();
-$eventDispatcher->addListeners(new LoadGame(), new AddLetter(), new ResetLetters(), new SaveGame());
+$eventDispatcher->addListeners(new LoadGame(), new NewGame(), new AddLetter(), new ResetLetters(), new TryWord(), new SaveGame());
 
 $router = Router::getFromGlobals();
 

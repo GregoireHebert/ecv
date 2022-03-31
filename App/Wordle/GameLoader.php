@@ -18,9 +18,9 @@ class GameLoader
         $this->gameRepository = new GameRepository($router);
     }
 
-    public function load(): Game
+    public function load(bool $force = false): Game
     {
-        if (null === $game = $this->gameRepository->getCurrentGame()) {
+        if($force || (null === $game = $this->gameRepository->getCurrentGame())) {
             $randomWord = $this->wordRepository->getRandomWord();
             $game = new Game($randomWord);
         }
