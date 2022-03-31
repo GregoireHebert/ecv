@@ -4,11 +4,23 @@
         <h1>Wordle</h1>
         <?php if ($game->isWon()) { ?>
             <h2>Félicitation !</h2>
+            <p>Le mot était <?php echo $game->getWord(); ?></p>
+            <p><a href="?new">Lancer une nouvelle partie.</a></p>
+        <?php } ?>
+        <?php if ($game->isLost()) { ?>
+            <h2>Perdu !</h2>
+            <p>Le mot était <?php echo $game->getWord(); ?></p>
             <p><a href="?new">Lancer une nouvelle partie.</a></p>
         <?php } ?>
         <p>
-            <b>Tentative N: <?php echo $game->getLettersAsString(); ?></b>
+            <?php foreach ($game->getTrials() as $number => $trial) {?>
+                <b>Tentative <?php echo $number+1; ?>:</b> <?php echo $trial; ?><br/>
+            <?php } ?>
+            <?php if (!$game->isLost() && !$game->isWon()) { ?>
+                <b>Tentative <?php echo ($number??-1)+2; ?>: <?php echo $game->getLettersAsString(); ?></b>
+            <?php } ?>
         </p>
+        <?php if (!$game->isLost() && !$game->isWon()) { ?>
         <br/><hr/>
         <p>
             <?php foreach (range('a', 'z') as $letter) {?>
@@ -21,5 +33,6 @@
         <p>
             <a href="?try">Valider mon mot</a>
         </p>
+        <?php } ?>
     </body>
 </html>

@@ -6,6 +6,7 @@ namespace App\Infra\Repository;
 
 use App\Routing\Router;
 use App\Wordle\Game;
+use App\Wordle\Trial;
 
 class GameRepository
 {
@@ -16,7 +17,7 @@ class GameRepository
     public function getCurrentGame(): ?Game
     {
         if (null !== $wordle = $this->router->getCookie('wordle')) {
-            return unserialize($wordle, ['allowed_classes' => [Game::class]]);
+            return unserialize($wordle, ['allowed_classes' => [Game::class, Trial::class]]);
         }
 
         return null;

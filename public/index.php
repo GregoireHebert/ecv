@@ -14,16 +14,16 @@ use App\Infra\EventsDispatcher\Events\ControllerEvent;
 use App\Infra\EventsDispatcher\Events\ContentEvent;
 use App\Routing\Router;
 
+spl_autoload_register(function($fqcn) {
+    $path = str_replace('\\', '/', $fqcn);
+    require_once (__DIR__.'/../'.$path.'.php');
+});
+
 session_start();
 
 //$_SESSION['user'] = null;
 //$_SESSION['user'] = ['isAdmin' => false];
 $_SESSION['user'] = ['isAdmin' => true];
-
-spl_autoload_register(function($fqcn) {
-    $path = str_replace('\\', '/', $fqcn);
-    require_once (__DIR__.'/../'.$path.'.php');
-});
 
 define('APP_ENV', 'prod');
 define('PUBLIC_DIR', __DIR__);
