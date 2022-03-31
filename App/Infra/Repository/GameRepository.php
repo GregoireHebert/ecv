@@ -16,9 +16,14 @@ class GameRepository
     public function getCurrentGame(): ?Game
     {
         if (null !== $wordle = $this->router->getCookie('wordle')) {
-            // TODO
+            return unserialize($wordle, ['allowed_classes' => [Game::class]]);
         }
 
         return null;
+    }
+
+    public function save(Game $game): void
+    {
+        setcookie('wordle', serialize($game), 0, "/", "localhost", false, true);
     }
 }

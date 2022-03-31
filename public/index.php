@@ -3,6 +3,7 @@
 declare(strict_types=1);
 
 use App\EventsListener\LoadGame;
+use App\EventsListener\SaveGame;
 use App\Infra\EventsDispatcher\Dispatcher;
 use App\Infra\EventsDispatcher\Events\RouterEvent;
 use App\Infra\EventsDispatcher\Events\ControllerEvent;
@@ -24,7 +25,7 @@ define('APP_ENV', 'prod');
 define('PUBLIC_DIR', __DIR__);
 
 $eventDispatcher = new Dispatcher();
-$eventDispatcher->addListeners(new LoadGame());
+$eventDispatcher->addListeners(new LoadGame(), new SaveGame());
 
 $router = Router::getFromGlobals();
 
