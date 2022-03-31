@@ -2,9 +2,7 @@
 
 declare(strict_types=1);
 
-use App\EventsListener\IsAuthenticated;
-use App\EventsListener\IsAdmin;
-use App\EventsListener\IsDebug;
+use App\EventsListener\LoadGame;
 use App\Infra\EventsDispatcher\Dispatcher;
 use App\Infra\EventsDispatcher\Events\RouterEvent;
 use App\Infra\EventsDispatcher\Events\ControllerEvent;
@@ -13,19 +11,20 @@ use App\Routing\Router;
 
 session_start();
 
-$_SESSION['user'] = null;
+//$_SESSION['user'] = null;
 //$_SESSION['user'] = ['isAdmin' => false];
-//$_SESSION['user'] = ['isAdmin' => true];
+$_SESSION['user'] = ['isAdmin' => true];
 
 spl_autoload_register(function($fqcn) {
     $path = str_replace('\\', '/', $fqcn);
     require_once (__DIR__.'/../'.$path.'.php');
 });
 
-define('APP_ENV', 'dev');
+define('APP_ENV', 'prod');
+define('PUBLIC_DIR', __DIR__);
 
 $eventDispatcher = new Dispatcher();
-$eventDispatcher->addListeners(new IsAuthenticated(), new IsAdmin(), new IsDebug());
+$eventDispatcher->addListeners(new LoadGame());
 
 $router = Router::getFromGlobals();
 

@@ -7,7 +7,7 @@ namespace App\EventsListener;
 use App\Infra\EventsDispatcher\Events\RouterEvent;
 use App\Infra\EventsDispatcher\ListenerInterface;
 
-class IsAuthenticated implements ListenerInterface
+class LoadGame implements ListenerInterface
 {
     public function support($event): bool
     {
@@ -17,10 +17,6 @@ class IsAuthenticated implements ListenerInterface
     /** @param RouterEvent $event */
     public function notify($event)
     {
-        if (null === $event->router::getUser()) {
-            header("HTTP/1.1 401 Unauthorized");
-            echo 'non autorisé';
-            die;
-        }
+
     }
 }

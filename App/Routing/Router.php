@@ -5,35 +5,27 @@ declare(strict_types=1);
 namespace App\Routing;
 
 use App\Controller\Controller;
-use App\Controller\Elo;
 use App\Controller\Error404;
-use App\Controller\Login;
-use App\Controller\Logout;
-use App\Controller\Toto;
-use App\Controller\Welcome;
-use App\Controller\NewPlayer;
+use App\Controller\Wordle;
 
 class Router
 {
     private array $routes = [
-        '/' => Welcome::class,
-        '/bidule' => Toto::class,
+        '/' => Wordle::class,
         '/404' => Error404::class,
-        '/elo' => Elo::class,
-        '/players/add' => NewPlayer::class,
-        '/login' => Login::class,
-        '/logout' => Logout::class
     ];
 
     private static string $path;
 
     private static ?Router $router = null;
     private static ?array $user = null;
+    private static ?array $cookies = null;
 
     private function __construct()
     {
         self::$path = $_SERVER['PATH_INFO'] ?? '/';
         self::$user = $_SESSION['user'] ?? null;
+        self::$cookies = $_COOKIE ?? [];
     }
 
     public static function getFromGlobals(): Router
@@ -60,5 +52,15 @@ class Router
     public static function getUser(): ?array
     {
         return self::$user;
+    }
+
+    public static function getCookies(): array
+    {
+        return self::$cookies;
+    }
+
+    public static function getCookie(string $item, $default = null)
+    {
+        return self::$cookies[$item] ?? null;
     }
 }
