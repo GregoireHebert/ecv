@@ -10,12 +10,14 @@ use App\Wordle\Helpers\Letter;
 class Game
 {
     public array $letters = [];
+    public array $placeholder = [];
     public bool $won = false;
     public bool $lost = false;
     public array $trials = [];
 
     public function __construct(private string $word)
     {
+        $this->placeholder  = [strtoupper($word[0])] + array_fill(0,  strlen($word), '_');
     }
 
     public function getWord(): string
@@ -23,13 +25,17 @@ class Game
         return $this->word;
     }
 
-    public function getLettersAsString(bool $colorized = false): string
+    public function getLettersAsString(): string
     {
-        if (!$colorized){
-            return str_pad(implode($this->letters), strlen($this->word), '_');
-        }
+        return empty($this->letters) ?
+            implode(' ', $this->placeholder) :
+            implode(' ', $this->letters + array_fill(0,  strlen($this->word), '_'));
+    }
 
+    public function getLettersAsStringColorized(): string
+    {
         $string = '';
+
         foreach ($this->letters as $place => $stringLetter) {
             $letter = new Letter($stringLetter);
             $valid = $letter->isValidInWord($this->word);
@@ -51,6 +57,17 @@ class Game
         return $string;
     }
 
+    public function updatePlaceholder(): void
+    {
+        foreach ($this->letters as $place => $stringLetter) {
+            $letter = new Letter($stringLetter);
+            $valid = $letter->isValidInWord($this->word);
+            $placed = $letter->isPlacedInWord($place, $this->word);
+
+            $this->placeholder[$place] = $valid && $placed ? $stringLetter : '_';
+        }
+    }
+
     public function tryWord(): void
     {
         if ($this->lost) {
@@ -61,7 +78,7 @@ class Game
             throw new IncompleteWordException();
         }
 
-        $this->trials[] = new Trial($this->getLettersAsString(true));
+        $this->trials[] = new Trial($this->getLettersAsStringColorized());
 
         if ($this->word === implode($this->letters)) {
             $this->won = true;
@@ -71,6 +88,7 @@ class Game
             $this->lost = true;
         }
 
+        $this->updatePlaceholder();
         $this->resetletters();
     }
 
