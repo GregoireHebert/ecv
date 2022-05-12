@@ -1,0 +1,38 @@
+<html>
+    <head></head>
+    <body>
+        <h1>Wordle</h1>
+        {% if (game.isWon()) %}
+            <h2>Félicitation !</h2>
+            <p>Le mot était {{ game.getWord() }}</p>
+            <p><a href="?new">Lancer une nouvelle partie.</a></p>
+        {% endif %}
+        {% if (game.isLost()) %}
+            <h2>Perdu !</h2>
+            <p>Le mot était {{ game.getWord() }}</p>
+            <p><a href="?new">Lancer une nouvelle partie.</a></p>
+        {% endif %}
+        <p>
+            {% for number, trial in game.getTrials() %}
+                <b>Tentative {{ number+1 }}:</b> {{ trial|raw }}<br/>
+            {% endfor %}
+            {% if (game.isLost() is same as false and game.isWon() is same as false) %}
+                <b>Tentative {{ (number??-1)+2 }}: {{ game.getLettersAsString() }}</b>
+            {% endif %}
+        </p>
+        {% if (game.isLost() is same as false and game.isWon() is same as false) %}
+        <br/><hr/>
+        <p>
+            {% for letter in 'a'..'z' %}
+            <a href="?letter={{ letter }}">{{ letter }}</a>
+            {% endfor %}
+        </p>
+        <p>
+            <a href="?reset">Recommencer</a>
+        </p>
+        <p>
+            <a href="?try">Valider mon mot</a>
+        </p>
+        {% endif %}
+    </body>
+</html>
